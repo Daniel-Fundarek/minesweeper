@@ -1,5 +1,7 @@
 package sk.stuba.fei.uim.oop;
 
+import sk.stuba.fei.uim.oop.utility.KeyboardInput;
+
 import java.util.Random;
 
 public class Table {
@@ -7,7 +9,9 @@ public class Table {
     private int sizeY;
     private int numOfMines;
     private char[][] board;
+    private char[][] boardForPlayer;
     private Random random =new Random();
+    private Evaluate square;
 
 
 
@@ -22,8 +26,12 @@ public class Table {
 
     public void createBoard(){    // neskor zmenit na private
         this.board = new char[sizeX+2][sizeY+2];
+        this.boardForPlayer = new char[sizeX+2][sizeY+2];
+        square = new Evaluate(board,boardForPlayer);
         fillBoard();
+        fillBoardForPlayer();
         printBoard();
+        runGame();
     }
     private boolean randPerm(){
         int numOfTiles = sizeX*sizeY;
@@ -61,15 +69,37 @@ public class Table {
             }
         }
     }
+    private void fillBoardForPlayer(){
+
+        for(int i=0; i< boardForPlayer.length;i++){
+            for(int j=0;j< boardForPlayer[1].length;j++){
+                if(j==0||i==0||i==boardForPlayer.length-1||j==boardForPlayer[1].length-1){
+                    boardForPlayer[i][j] = '*';
+                }
+                else {
+
+                        boardForPlayer[i][j] = '#';
+
+                }
+            }
+        }
+    }
 
     private void printBoard(){
-        for(int i=0; i< board.length;i++){
-            for(int j=0;j< board[1].length;j++){
-                System.out.print(" "+ board[i][j]);
+        for(int i=0; i< boardForPlayer.length;i++){
+            for(int j=0;j< boardForPlayer[1].length;j++){
+                System.out.print(" "+ boardForPlayer[i][j]);
 
             }
             System.out.println();
         }
+    }
+    private void runGame(){
+        int boomStatus=0;
+        do {
+            boomStatus=square.checkForMine(KeyboardInput.readInt("zadaj x suradnicu: "), KeyboardInput.readInt("zadaj y suradnicu: "));
+            printBoard();
+        }while(boomStatus==0);
     }
 
 
