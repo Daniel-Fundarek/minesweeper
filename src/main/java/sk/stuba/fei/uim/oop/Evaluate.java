@@ -30,8 +30,13 @@ public class Evaluate {
                     }
                 }
             }
-            char evalSquareChar=(char)(evalSquare+'0');
-            boardForPlayer[x][y]=evalSquareChar;
+            if(evalSquare==0){
+                boardForPlayer[x][y]='@';
+            }
+            else {
+                char evalSquareChar = (char) (evalSquare + '0');
+                boardForPlayer[x][y] = evalSquareChar;
+            }
             if(x>1 && y>1 && x< board.length-1 && y < board.length-1) {
                 evalSquaresAround(x - 1, y - 1);
                 evalSquaresAround(x + 1, y + 1);
