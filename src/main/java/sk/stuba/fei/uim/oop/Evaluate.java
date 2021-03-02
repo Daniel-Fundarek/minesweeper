@@ -54,6 +54,7 @@ public class Evaluate {
     }
     public int checkForMine(int x,int y){
         if (board[x][y]=='X') {
+            boardForPlayer[x][y]='X';
             return 1;
         }
         else{

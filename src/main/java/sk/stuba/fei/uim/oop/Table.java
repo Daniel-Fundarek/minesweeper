@@ -30,8 +30,7 @@ public class Table {
         square = new Evaluate(board,boardForPlayer);
         fillBoard();
         fillBoardForPlayer();
-        printBoard();
-        printPlayerBoard();
+        //printBoard();
         runGame();
     }
     private boolean randPerm(){
@@ -107,8 +106,12 @@ public class Table {
     private void runGame(){
         int boomStatus=0;
         do {
-            boomStatus=square.checkForMine(KeyboardInput.readInt("zadaj x suradnicu: "), KeyboardInput.readInt("zadaj y suradnicu: "));
             printPlayerBoard();
+            boomStatus=square.checkForMine(KeyboardInput.readInt("zadaj x suradnicu: "), KeyboardInput.readInt("zadaj y suradnicu: "));
+            if(boomStatus==1){
+                printPlayerBoard();
+                System.out.println("BOOOOOM!!!!!!!!");
+            }
         }while(boomStatus==0);
     }
 
