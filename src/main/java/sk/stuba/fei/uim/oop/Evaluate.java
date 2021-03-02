@@ -30,18 +30,25 @@ public class Evaluate {
                     }
                 }
             }
+            board[x][y]='@';
             if(evalSquare==0){
-                boardForPlayer[x][y]='@';
+                boardForPlayer[x][y]='0';
             }
             else {
                 char evalSquareChar = (char) (evalSquare + '0');
                 boardForPlayer[x][y] = evalSquareChar;
             }
-            if(x>1 && y>1 && x< board.length-1 && y < board.length-1) {
-                evalSquaresAround(x - 1, y - 1);
-                evalSquaresAround(x + 1, y + 1);
-                evalSquaresAround(x + 1, y - 1);
-                evalSquaresAround(x - 1, y + 1);
+            if(x>0 && y>0 && x< board.length && y < board.length) {
+              //  evalSquaresAround(x - 1, y - 1);
+              //  evalSquaresAround(x + 1, y + 1);
+              //  evalSquaresAround(x + 1, y - 1);
+              //  evalSquaresAround(x - 1, y + 1);
+
+                evalSquaresAround(x , y - 1);
+                evalSquaresAround(x , y + 1);
+                evalSquaresAround(x + 1, y );
+                evalSquaresAround(x - 1, y );
+
             }
         }
     }

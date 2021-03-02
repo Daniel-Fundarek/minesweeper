@@ -31,6 +31,7 @@ public class Table {
         fillBoard();
         fillBoardForPlayer();
         printBoard();
+        printPlayerBoard();
         runGame();
     }
     private boolean randPerm(){
@@ -86,6 +87,15 @@ public class Table {
     }
 
     private void printBoard(){
+        for(int i=0; i< board.length;i++){
+            for(int j=0;j< board[1].length;j++){
+                System.out.print(" "+ board[i][j]);
+
+            }
+            System.out.println();
+        }
+    }
+    private void printPlayerBoard(){
         for(int i=0; i< boardForPlayer.length;i++){
             for(int j=0;j< boardForPlayer[1].length;j++){
                 System.out.print(" "+ boardForPlayer[i][j]);
@@ -98,7 +108,7 @@ public class Table {
         int boomStatus=0;
         do {
             boomStatus=square.checkForMine(KeyboardInput.readInt("zadaj x suradnicu: "), KeyboardInput.readInt("zadaj y suradnicu: "));
-            printBoard();
+            printPlayerBoard();
         }while(boomStatus==0);
     }
 
