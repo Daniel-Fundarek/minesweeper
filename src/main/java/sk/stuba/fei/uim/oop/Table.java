@@ -21,7 +21,7 @@ public class Table {
     }
 
     public void createBoard(){    // neskor zmenit na private
-        this.board = new char[sizeX][sizeY];
+        this.board = new char[sizeX+2][sizeY+2];
         fillBoard();
         printBoard();
     }
@@ -39,22 +39,24 @@ public class Table {
         char mineOrEmpty; // bud 0 alebo 1 reprezentujuca minu alebo prazdne policko
         for(int i=0; i< board.length;i++){
             for(int j=0;j< board[1].length;j++){
-                if (minesPlaced<numOfMines && emptyTiles<(sizeX*sizeY-numOfMines)) {
-                    mineOrEmpty = (randPerm()) ? 'X' : '0';
-                    board[i][j] = mineOrEmpty;
-                    if(mineOrEmpty=='X') {
+                if(j==0||i==0||i==board.length-1||j==board[1].length-1){
+                    board[i][j] = '*';
+                }
+                else {
+                    if (minesPlaced < numOfMines && emptyTiles < (sizeX * sizeY - numOfMines)) {
+                        mineOrEmpty = (randPerm()) ? 'X' : '0';
+                        board[i][j] = mineOrEmpty;
+                        if (mineOrEmpty == 'X') {
+                            minesPlaced++;
+                        } else
+                            emptyTiles++;
+                    } else if (minesPlaced < numOfMines && emptyTiles == (sizeX * sizeY - numOfMines)) {
+                        board[i][j] = 'X';
                         minesPlaced++;
-                    }
-                    else
+                    } else {
+                        board[i][j] = '0';
                         emptyTiles++;
-                }
-                else if(minesPlaced<numOfMines && emptyTiles==(sizeX*sizeY-numOfMines)){
-                    board[i][j] = 'X';
-                    minesPlaced++;
-                }
-                else{
-                    board[i][j]='0';
-                    emptyTiles++;
+                    }
                 }
             }
         }

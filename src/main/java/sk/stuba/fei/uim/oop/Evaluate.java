@@ -2,12 +2,13 @@ package sk.stuba.fei.uim.oop;
 
 public class Evaluate {
     char[][] board;
-
+    int x;
+    int y;
 
     public Evaluate(char[][] board,int x, int y){
         this.board=board;
         this.x = x;
-        this.x = x;
+        this.y = y;
     }
 
     private void evalSquaresAround(int x, int y){
@@ -17,6 +18,7 @@ public class Evaluate {
                 for (int j = 0; j < 3; j++) {
 
                     if(board[x-1][y-1]=='0')
+                        ;
 
                 }
             }
