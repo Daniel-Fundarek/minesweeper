@@ -1,5 +1,7 @@
-package sk.stuba.fei.uim.oop;
+package sk.stuba.fei.uim.oop.utility;
 
+import sk.stuba.fei.uim.oop.utility.ConsoleColors;
+import sk.stuba.fei.uim.oop.utility.Evaluate;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 
 import java.util.Random;
@@ -30,7 +32,7 @@ public class Table {
         square = new Evaluate(board,boardForPlayer);
         fillBoard();
         fillBoardForPlayer();
-        //printBoard();
+        printBoard();
         runGame();
     }
     private boolean randPerm(){
@@ -78,7 +80,7 @@ public class Table {
                 }
                 else {
 
-                        boardForPlayer[i][j] = '#';
+                        boardForPlayer[i][j] = '■';
 
                 }
             }
@@ -98,12 +100,23 @@ public class Table {
         for(int i=0; i< boardForPlayer.length;i++){
             for(int j=0;j< boardForPlayer[1].length;j++){
 
-                System.out.print(" "+colorSettting(i,j) + boardForPlayer[i][j]);
-
+                System.out.print("  "+colorSettting(i,j) + boardForPlayer[i][j]);
+                if(j==boardForPlayer[1].length-1 && i>0 && i<boardForPlayer.length-1){
+                    System.out.print(" "+i);  // test
+                }
             }
             System.out.println();
         }
-        System.out.print(colorSettting(-1,-1));
+        System.out.print("     ");
+        for(int cislicovanie=1;cislicovanie<=boardForPlayer[1].length-2;cislicovanie++){
+            if(cislicovanie<10) {
+                System.out.print(cislicovanie + "  ");
+            }
+            else{
+                System.out.print(cislicovanie + " ");
+            }
+        }
+        System.out.println(colorSettting(-1,-1));
     }
     private String colorSettting(int x, int y){
         String colorChar = new String();

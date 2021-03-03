@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop;
+package sk.stuba.fei.uim.oop.utility;
 
 public class Evaluate {
      char[][] board;
@@ -39,7 +39,7 @@ public class Evaluate {
                 char evalSquareChar = (char) (evalSquare + '0');
                 boardForPlayer[x][y] = evalSquareChar;
             }
-            if(x>0 && y>0 && x< board.length && y < board.length) {
+            if(evalSquare==0 && x>0 && y>0 && x< board.length && y < board.length  ) {
               //  evalSquaresAround(x - 1, y - 1);
               //  evalSquaresAround(x + 1, y + 1);
               //  evalSquaresAround(x + 1, y - 1);
