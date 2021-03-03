@@ -35,6 +35,7 @@ public class Evaluate {
                 boardForPlayer[x][y]='0';
             }
             else {
+
                 char evalSquareChar = (char) (evalSquare + '0');
                 boardForPlayer[x][y] = evalSquareChar;
             }
@@ -52,14 +53,25 @@ public class Evaluate {
             }
         }
     }
-    public int checkForMine(int x,int y){
-        if (board[x][y]=='X') {
-            boardForPlayer[x][y]='X';
-            return 1;
+    public int checkForMine(int x,int y,int typeFlagPress){
+        if(typeFlagPress==0){
+            if (board[x][y]=='X') {
+                boardForPlayer[x][y]='X';
+                return 1;
+            }
+            else{
+                evalSquaresAround(x,y);
+                return 0;
+            }
         }
         else{
-            evalSquaresAround(x,y);
-            return 0;
+            boardForPlayer[x][y]='!';
+            if (board[x][y]=='X') {
+                return 2;
+            }
+            else{
+                return 0;
+            }
         }
     }
 

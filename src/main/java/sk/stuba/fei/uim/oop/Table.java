@@ -12,7 +12,7 @@ public class Table {
     private char[][] boardForPlayer;
     private Random random =new Random();
     private Evaluate square;
-
+    ConsoleColors color= new ConsoleColors();
 
 
     public Table(int sizeX,int sizeY, int numOfMines){
@@ -97,22 +97,79 @@ public class Table {
     private void printPlayerBoard(){
         for(int i=0; i< boardForPlayer.length;i++){
             for(int j=0;j< boardForPlayer[1].length;j++){
-                System.out.print(" "+ boardForPlayer[i][j]);
+
+                System.out.print(" "+colorSettting(i,j) + boardForPlayer[i][j]);
 
             }
             System.out.println();
         }
+        System.out.print(colorSettting(-1,-1));
+    }
+    private String colorSettting(int x, int y){
+        String colorChar = new String();
+        if(x==-1 && y==-1){
+            colorChar=color.RESET;
+        }
+        else {
+            switch (boardForPlayer[x][y]) {
+
+                case '1':
+                    colorChar = color.BLUE;
+                    break;
+                case '2':
+                    colorChar = color.GREEN;
+                    break;
+                case '3':
+                    colorChar = color.RED;
+                    break;
+                case '4':
+                    colorChar = color.BLUE_BRIGHT;
+                    break;
+                case '5':
+                    colorChar = color.RED_BRIGHT;
+                    break;
+                case '6':
+                    colorChar = color.CYAN;
+                    break;
+                case '7':
+                    colorChar = color.PURPLE;
+                    break;
+                case '8':
+                    colorChar = color.BLACK;
+                    break;
+                case '!':
+                    colorChar = color.YELLOW;
+                    break;
+                case '*':
+                    colorChar = color.BLACK;
+                    break;
+
+                default:
+                    colorChar = color.RESET;
+                    break;
+            }
+        }
+            return colorChar;
+
     }
     private void runGame(){
         int boomStatus=0;
+        int MinesFlagged=0;
         do {
             printPlayerBoard();
-            boomStatus=square.checkForMine(KeyboardInput.readInt("zadaj x suradnicu: "), KeyboardInput.readInt("zadaj y suradnicu: "));
+            boomStatus=square.checkForMine(KeyboardInput.readInt("zadaj x suradnicu: "), KeyboardInput.readInt("zadaj y suradnicu: "),KeyboardInput.readInt("zadaj 0 ak chces kliknut alebo 1 ak ches flagnut blok: "));
             if(boomStatus==1){
                 printPlayerBoard();
                 System.out.println("BOOOOOM!!!!!!!!");
             }
-        }while(boomStatus==0);
+            else if(boomStatus==2){
+                MinesFlagged++;
+                if(MinesFlagged==numOfMines){
+                    printPlayerBoard();
+                    System.out.println("Flaggol si vsetky miny Vyhral si!");
+                }
+            }
+        }while(boomStatus != 1 && MinesFlagged!=numOfMines);
     }
 
 
