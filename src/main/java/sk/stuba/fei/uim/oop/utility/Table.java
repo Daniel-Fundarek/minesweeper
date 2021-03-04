@@ -4,6 +4,9 @@ import sk.stuba.fei.uim.oop.utility.ConsoleColors;
 import sk.stuba.fei.uim.oop.utility.Evaluate;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class Table {
@@ -15,6 +18,10 @@ public class Table {
     private Random random =new Random();
     private Evaluate square;
     ConsoleColors color= new ConsoleColors();
+    private int pohybX=1;
+    private int pohybY=1;
+    public int boomStatus=0;
+    public int MinesFlagged=0;
 
 
     public Table(int sizeX,int sizeY, int numOfMines){
@@ -27,13 +34,87 @@ public class Table {
     }
 
     public void createBoard(){    // neskor zmenit na private
+        JFrame frame = new JFrame();
         this.board = new char[sizeX+2][sizeY+2];
         this.boardForPlayer = new char[sizeX+2][sizeY+2];
         square = new Evaluate(board,boardForPlayer);
         fillBoard();
         fillBoardForPlayer();
-        printBoard();
-        runGame();
+        printPlayerBoard();
+
+
+
+        KeyListener  keyListener = new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode()==38){
+                    pohybX--;
+                    printPlayerBoard();
+                }
+                if(e.getKeyCode()==40){
+                    pohybX++;
+                    printPlayerBoard();
+                }
+                if(e.getKeyCode()==37){
+                    pohybY--;
+                    printPlayerBoard();
+                }
+                if(e.getKeyCode()==39){
+                    pohybY++;
+                    printPlayerBoard();
+
+                }
+                if(e.getKeyCode()==10){
+                    printPlayerBoard();
+                    boomStatus=square.checkForMine(pohybX,pohybY,0);//posli suradnice
+                    if(boomStatus==1){
+                        printPlayerBoard();
+                        System.out.println("BOOOOOM!!!!!!!!");
+                    }
+                    else{
+                        printPlayerBoard();
+                    }
+                }
+                if(e.getKeyCode()==32){
+                    boomStatus=square.checkForMine(pohybX,pohybY,1);
+                     if(boomStatus==2){
+                        MinesFlagged++;
+                        if(MinesFlagged==numOfMines){
+                            printPlayerBoard();
+                            System.out.println("Flaggol si vsetky miny Vyhral si!");
+
+                        }
+                    }
+                     else{
+                         printPlayerBoard();
+                     }
+                    //posli flag
+                }
+
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+
+
+        };
+        frame.addKeyListener(keyListener);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(100,100);
+        frame.setVisible(true);
+
+       System.out.println("dssssss");
+        //printBoard();
+        //runGame();
     }
     private boolean randPerm(){
         int numOfTiles = sizeX*sizeY;
@@ -96,11 +177,16 @@ public class Table {
             System.out.println();
         }
     }
+
     private void printPlayerBoard(){
         for(int i=0; i< boardForPlayer.length;i++){
             for(int j=0;j< boardForPlayer[1].length;j++){
-
-                System.out.print("  "+colorSettting(i,j) + boardForPlayer[i][j]);
+                if(pohybX==i&&pohybY==j){
+                    System.out.print("  "+colorSettting(-2,-2) + boardForPlayer[i][j]);
+                }
+                else {
+                    System.out.print("  " + colorSettting(i, j) + boardForPlayer[i][j]);
+                }
                 if(j==boardForPlayer[1].length-1 && i>0 && i<boardForPlayer.length-1){
                     System.out.print(" "+i);  // test
                 }
@@ -122,6 +208,9 @@ public class Table {
         String colorChar = new String();
         if(x==-1 && y==-1){
             colorChar=color.RESET;
+        }
+        else if(x==-2 && y==-2){
+            colorChar=color.YELLOW_BOLD;
         }
         else {
             switch (boardForPlayer[x][y]) {
