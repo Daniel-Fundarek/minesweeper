@@ -40,6 +40,7 @@ public class Table {
         square = new Evaluate(board,boardForPlayer);
         fillBoard();
         fillBoardForPlayer();
+        printBoard();
         printPlayerBoard();
 
 
@@ -76,6 +77,7 @@ public class Table {
                     if(boomStatus==1){
                         printPlayerBoard();
                         System.out.println("BOOOOOM!!!!!!!!");
+                        frame.dispose();
                     }
                     else{
                         printPlayerBoard();
@@ -83,11 +85,13 @@ public class Table {
                 }
                 if(e.getKeyCode()==32){
                     boomStatus=square.checkForMine(pohybX,pohybY,1);
+                    printPlayerBoard();
                      if(boomStatus==2){
                         MinesFlagged++;
                         if(MinesFlagged==numOfMines){
                             printPlayerBoard();
                             System.out.println("Flaggol si vsetky miny Vyhral si!");
+                            frame.dispose();
 
                         }
                     }
@@ -109,10 +113,10 @@ public class Table {
         };
         frame.addKeyListener(keyListener);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(100,100);
+        frame.setSize(1,1);
         frame.setVisible(true);
 
-       System.out.println("dssssss");
+
         //printBoard();
         //runGame();
     }
@@ -210,7 +214,7 @@ public class Table {
             colorChar=color.RESET;
         }
         else if(x==-2 && y==-2){
-            colorChar=color.YELLOW_BOLD;
+            colorChar=color.BLACK_BOLD_BRIGHT;
         }
         else {
             switch (boardForPlayer[x][y]) {
