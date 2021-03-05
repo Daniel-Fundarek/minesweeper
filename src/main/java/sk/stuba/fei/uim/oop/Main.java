@@ -6,7 +6,7 @@ import sk.stuba.fei.uim.oop.utility.Table;
 
 public class Main {
     public static void main(String[] args) {
-        Table x = new Table(10,10,25);
+        Table x = new Table(24,20,99);
         x.createBoard();
     }
 }

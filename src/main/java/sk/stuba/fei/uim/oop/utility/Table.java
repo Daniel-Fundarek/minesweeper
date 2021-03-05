@@ -12,16 +12,17 @@ import java.util.Random;
 public class Table {
     private int sizeX;
     private int sizeY;
-    private int numOfMines;
+    public int numOfMines;
     private char[][] board;
     private char[][] boardForPlayer;
     private Random random =new Random();
-    private Evaluate square;
+    public Evaluate square;
     ConsoleColors color= new ConsoleColors();
-    private int pohybX=1;
-    private int pohybY=1;
+    public int pohybX=1;
+    public int pohybY=1;
     public int boomStatus=0;
     public int MinesFlagged=0;
+    public JFrame frame;
 
 
     public Table(int sizeX,int sizeY, int numOfMines){
@@ -34,7 +35,7 @@ public class Table {
     }
 
     public void createBoard(){    // neskor zmenit na private
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         this.board = new char[sizeX+2][sizeY+2];
         this.boardForPlayer = new char[sizeX+2][sizeY+2];
         square = new Evaluate(board,boardForPlayer);
@@ -73,7 +74,7 @@ public class Table {
                 }
                 if(e.getKeyCode()==10){
                     printPlayerBoard();
-                    boomStatus=square.checkForMine(pohybX,pohybY,0);//posli suradnice
+                    boomStatus=square.checkForMine(pohybX,pohybY,0);
                     if(boomStatus==1){
                         printPlayerBoard();
                         System.out.println("BOOOOOM!!!!!!!!");
@@ -172,7 +173,7 @@ public class Table {
         }
     }
 
-    private void printBoard(){
+    public void printBoard(){
         for(int i=0; i< board.length;i++){
             for(int j=0;j< board[1].length;j++){
                 System.out.print(" "+ board[i][j]);
@@ -182,7 +183,7 @@ public class Table {
         }
     }
 
-    private void printPlayerBoard(){
+    public void printPlayerBoard(){
         for(int i=0; i< boardForPlayer.length;i++){
             for(int j=0;j< boardForPlayer[1].length;j++){
                 if(pohybX==i&&pohybY==j){
